@@ -1,77 +1,234 @@
-<!DOCTYPE html>
-<html lang="az">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TƏKƏR EVİ 044</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      color: white;
-      text-align: center;
-      background: #111;
-    }
-    header {
-      padding: 55px 15px;
-      background: linear-gradient(#0009, #000b),
-      url("https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1200")
-      center/cover;
-    }
-    h1 { font-size: 34px; color: #ffcc00; }
-    header p { font-size: 18px; }
-    .cars {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-      padding: 20px;
-    }
-    .cars img {
-      width: 90%;
-      max-width: 330px;
-      height: 190px;
-      object-fit: cover;
-      border-radius: 12px;
-    }
-    .contact { padding: 25px 15px; }
-    .btn {
-      display: block;
-      max-width: 300px;
-      margin: 12px auto;
-      padding: 15px;
-      border-radius: 10px;
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      background: #d71920;
-    }
-    .whatsapp { background: #25D366; }
-    .tiktok { background: #222; }
-    footer { padding: 20px; background: #050505; }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>TƏKƏR EVİ 044</h1>
-    <p>Avtomobil dünyasına xoş gəlmisiniz!</p>
-  </header>
 
-  <h2>Avtomobillərimiz</h2>
-  <div class="cars">
-    <img src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800" alt="Mercedes">
-    <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800" alt="BMW">
-    <img src="https://images.unsplash.com/photo-1519689680058-324335c77eba?w=800" alt="Avtomobil">
+
+      <label>Aylıq ödəniş (AZN)</label>
+      <input id="monthInput" type="number" placeholder="Məsələn: 12">
+
+      <label>Təkərin şəklini seç</label>
+      <input id="imageInput" type="file" accept="image/*">
+
+      <button class="green" onclick="saveProduct()">Məhsulu yadda saxla</button>
+      <button class="gray" onclick="clearForm()">Təmizlə</button>
+
+      <h3>Məhsulların idarəsi</h3>
+      <div id="adminList"></div>
+      <button class="red" onclick="logout()">Çıxış</button>
+
+      <p class="notice">
+        Məhsullar hələlik yalnız bu brauzerdə saxlanılır.
+        Hamıya görünməsi üçün onlayn baza qoşulmalıdır.
+      </p>
+    </div>
   </div>
+</div>
 
-  <div class="contact">
-    <h2>Bizimlə əlaqə</h2>
-    <a class="btn whatsapp" href="https://wa.me/994775088533">WhatsApp</a>
-    <a class="btn tiktok" href="https://www.tiktok.com/@tekerevi044">TikTok</a>
-    <a class="btn" href="tel:+994507654337">Zəng et</a>
-  </div>
+<script>
+const PHONE = "994XXXXXXXXX";
+const INSTAGRAM = "https://instagram.com/";
+const TIKTOK = "https://tiktok.com/";
 
-  <footer>© 2026 TƏKƏR EVİ 044</footer>
+const ADMIN_PASSWORD = "044123";
+
+const waURL = "https://wa.me/" + PHONE;
+
+["heroWA","contactWA"].forEach(id =>
+  document.getElementById(id).href = waURL
+);
+["heroIG","contactIG"].forEach(id =>
+  document.getElementById(id).href = INSTAGRAM
+);
+["heroTT","contactTT"].forEach(id =>
+  document.getElementById(id).href = TIKTOK
+);
+["heroCall","contactCall"].forEach(id =>
+  document.getElementById(id).href = "tel:+" + PHONE
+);
+
+let products = JSON.parse(localStorage.getItem("tekerProducts") || "[]");
+let editingIndex = -1;
+let selectedImage = "";
+
+function showAdmin(){
+  document.getElementById("admin").style.display = "block";
+  document.getElementById("admin").scrollIntoView();
+}
+
+function login(){
+  if(document.getElementById("password").value === ADMIN_PASSWORD){
+    document.getElementById("login").style.display = "none";
+    document.getElementById("controls").style.display = "block";
+    renderAdmin();
+  }else{
+    alert("Parol yanlışdır!");
+  }
+}
+
+function logout(){
+  document.getElementById("login").style.display = "block";
+  document.getElementById("controls").style.display = "none";
+  document.getElementById("password").value = "";
+}
+
+document.getElementById("imageInput").addEventListener("change", function(){
+  const file = this.files[0];
+  if(!file) return;
+
+  if(file.size > 1500000){
+    alert("Şəkil 1.5 MB-dan kiçik olmalıdır.");
+    this.value = "";
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = e => selectedImage = e.target.result;
+  reader.readAsDataURL(file);
+});
+
+function saveProduct(){
+  const brand = document.getElementById("brandInput").value.trim();
+  const size = document.getElementById("sizeInput").value.trim();
+  const cash = document.getElementById("cashInput").value;
+  const month = document.getElementById("monthInput").value;
+
+  if(!brand || !size || cash === "" || month === ""){
+    alert("Bütün məlumatları doldur!");
+    return;
+  }
+
+  const oldImage = editingIndex >= 0
+    ? products[editingIndex].image || ""
+    : "";
+
+  const product = {
+    brand, size, cash, month,
+    image: selectedImage || oldImage
+  };
+
+  if(editingIndex >= 0){
+    products[editingIndex] = product;
+  }else{
+    if(products.length >= 8){
+      alert("Maksimum 8 məhsul əlavə edə bilərsən.");
+      return;
+    }
+    products.push(product);
+  }
+
+  try{
+    localStorage.setItem("tekerProducts", JSON.stringify(products));
+  }catch(error){
+    alert("Yaddaş dolub. Daha kiçik şəkil seç.");
+    return;
+  }
+
+  clearForm();
+  renderProducts();
+  renderAdmin();
+  alert("Məhsul yadda saxlandı!");
+}
+
+function clearForm(){
+  ["brandInput","sizeInput","cashInput","monthInput","imageInput"]
+    .forEach(id => document.getElementById(id).value = "");
+  selectedImage = "";
+  editingIndex = -1;
+}
+
+function deleteProduct(index){
+  if(!confirm("Məhsulu silmək istəyirsən?")) return;
+
+  products.splice(index, 1);
+  localStorage.setItem("tekerProducts", JSON.stringify(products));
+  renderProducts();
+  renderAdmin();
+}
+
+function editProduct(index){
+  const p = products[index];
+
+  document.getElementById("brandInput").value = p.brand;
+  document.getElementById("sizeInput").value = p.size;
+  document.getElementById("cashInput").value = p.cash;
+  document.getElementById("monthInput").value = p.month;
+
+  selectedImage = p.image || "";
+  editingIndex = index;
+  document.getElementById("admin").scrollIntoView();
+}
+
+function renderProducts(){
+  const list = document.getElementById("productList");
+  list.innerHTML = "";
+
+  if(products.length === 0){
+    list.innerHTML = '<div class="empty">Hələ məhsul əlavə edilməyib.</div>';
+    return;
+  }
+
+  products.forEach(p => {
+    const card = document.createElement("div");
+    card.className = "product";
+
+    if(p.image){
+      const img = document.createElement("img");
+      img.src = p.image;
+      img.alt = p.brand;
+      card.appendChild(img);
+    }
+
+    const title = document.createElement("h3");
+    title.textContent = p.brand;
+
+    const size = document.createElement("p");
+    size.textContent = "Ölçü: " + p.size;
+
+    const cash = document.createElement("p");
+    cash.className = "price";
+    cash.textContent = p.cash + " AZN";
+
+    const month = document.createElement("p");
+    month.className = "month";
+    month.textContent = "Aylıq: " + p.month + " AZN";
+
+    const order = document.createElement("a");
+    order.className = "order";
+    order.textContent = "WhatsApp ilə sifariş";
+    order.href = waURL + "?text=" + encodeURIComponent(
+      "Salam, " + p.brand + " " + p.size + " təkəri ilə maraqlanıram."
+    );
+    order.target = "_blank";
+
+    card.append(title, size, cash, month, order);
+    list.appendChild(card);
+  });
+}
+
+function renderAdmin(){
+  const list = document.getElementById("adminList");
+  list.innerHTML = "";
+
+  products.forEach((p, index) => {
+    const item = document.createElement("div");
+    item.className = "admin-item";
+
+    const name = document.createElement("span");
+    name.textContent = p.brand + " — " + p.size;
+
+    const edit = document.createElement("button");
+    edit.className = "purple";
+    edit.textContent = "Dəyiş";
+    edit.onclick = () => editProduct(index);
+
+    const del = document.createElement("button");
+    del.className = "red";
+    del.textContent = "Sil";
+    del.onclick = () => deleteProduct(index);
+
+    item.append(name, edit, del);
+    list.appendChild(item);
+  });
+}
+
+renderProducts();
+</script>
 </body>
 </html>
