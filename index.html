@@ -1,234 +1,129 @@
 
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TƏKƏR EVİ 044</title>
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#090a0d;color:#fff;font-family:Arial,sans-serif}
+header{padding:16px 5%;background:#080808;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;border-bottom:1px solid #c69b35}
+.logo{font-size:25px;font-weight:900}
+.logo span,.gold{color:#f3c64e}
+nav{display:flex;gap:18px;flex-wrap:wrap}
+nav a{color:#fff;text-decoration:none;font-weight:bold}
+nav a:hover{color:#f3c64e}
+.hero{padding:25px 4%;text-align:center;background:linear-gradient(#0008,#0008)}
+.hero img{display:block;width:100%;max-width:1500px;margin:auto;border-radius:12px;border:1px solid #c69b35}
+.buttons{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:22px 0}
+.btn{display:inline-block;padding:13px 20px;border-radius:8px;text-decoration:none;font-weight:bold;color:#111;background:#e9bd45}
+.btn.green{background:#159b57;color:white}
+.btn.dark{background:#222;color:white;border:1px solid #c69b35}
+section{padding:38px 5%}
+.heading{text-align:center;color:#f3c64e;font-size:30px;margin:0 0 25px}
+.brands,.prices{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.brand,.price{background:linear-gradient(145deg,#242424,#090909);border:1px solid #b58c32;border-radius:12px;text-align:center;padding:22px 10px}
+.brand{font-size:20px;font-weight:900}
+.price h3{font-size:27px;color:#f3c64e;margin:5px}
+.price p{color:#ddd}
+.price strong{font-size:28px;color:#f3c64e}
+.note{text-align:center;color:#aaa;font-size:13px;margin-top:18px}
+.contact{text-align:center;background:#171717;border-top:1px solid #9b782e}
+.contact p{font-size:20px}
+footer{text-align:center;padding:25px;background:#050505;color:#aaa}
+@media(max-width:700px){
+ .brands,.prices{grid-template-columns:repeat(2,1fr)}
+ header{justify-content:center}
+ nav{justify-content:center}
+ .heading{font-size:25px}
+}
+@media(max-width:380px){
+ .brands,.prices{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
 
-      <label>Aylıq ödəniş (AZN)</label>
-      <input id="monthInput" type="number" placeholder="Məsələn: 12">
+<header>
+ <div class="logo">🛞 TƏKƏR EVİ <span>044</span></div>
+ <nav>
+  <a href="#home">Ana səhifə</a>
+  <a href="#brands">Markalar</a>
+  <a href="#prices">Qiymətlər</a>
+  <a href="#contact">Əlaqə</a>
+ </nav>
+</header>
 
-      <label>Təkərin şəklini seç</label>
-      <input id="imageInput" type="file" accept="image/*">
+<main>
+<section class="hero" id="home">
+ <img src="design.png" alt="TƏKƏR EVİ 044 reklam dizaynı">
+ <div class="buttons">
+  <a class="btn green" href="https://wa.me/994XXXXXXXXX">WhatsApp</a>
+  <a class="btn" href="tel:+994XXXXXXXXX">☎ Zəng et</a>
+  <a class="btn dark" href="https://instagram.com/">Instagram</a>
+  <a class="btn dark" href="https://tiktok.com/">TikTok</a>
+ </div>
+</section>
 
-      <button class="green" onclick="saveProduct()">Məhsulu yadda saxla</button>
-      <button class="gray" onclick="clearForm()">Təmizlə</button>
+<section id="brands">
+ <h2 class="heading">Təkər markalarımız</h2>
+ <div class="brands">
+  <div class="brand">MILEMAX</div>
+  <div class="brand">ANCHEE</div>
+  <div class="brand">JOYROAD</div>
+  <div class="brand">SUNFULL</div>
+  <div class="brand">KUMHO</div>
+  <div class="brand">FORTINE</div>
+  <div class="brand">TIANFU</div>
+  <div class="brand">MILEKING</div>
+ </div>
+</section>
 
-      <h3>Məhsulların idarəsi</h3>
-      <div id="adminList"></div>
-      <button class="red" onclick="logout()">Çıxış</button>
-
-      <p class="notice">
-        Məhsullar hələlik yalnız bu brauzerdə saxlanılır.
-        Hamıya görünməsi üçün onlayn baza qoşulmalıdır.
-      </p>
-    </div>
+<section id="prices">
+ <h2 class="heading">Aylıq ödəniş paketləri</h2>
+ <div class="prices">
+  <div class="price">
+   <h3>3 Ay</h3>
+   <p>Aylıq ödəniş</p>
+   <strong>50 ₼</strong>
   </div>
-</div>
+  <div class="price">
+   <h3>6 Ay</h3>
+   <p>Aylıq ödəniş</p>
+   <strong>70 ₼</strong>
+  </div>
+  <div class="price">
+   <h3>12 Ay</h3>
+   <p>Aylıq ödəniş</p>
+   <strong>90 ₼</strong>
+  </div>
+  <div class="price">
+   <h3>18 Ay</h3>
+   <p>Aylıq ödəniş</p>
+   <strong>110 ₼</strong>
+  </div>
+ </div>
+ <p class="note">Ödəniş şərtlərini sifarişdən əvvəl mağaza ilə dəqiqləşdirin.</p>
+</section>
 
-<script>
-const PHONE = "994XXXXXXXXX";
-const INSTAGRAM = "https://instagram.com/";
-const TIKTOK = "https://tiktok.com/";
+<section class="contact" id="contact">
+ <h2 class="heading">Bizimlə əlaqə</h2>
+ <div class="buttons">
+  <a class="btn green" href="https://wa.me/994XXXXXXXXX">WhatsApp ilə yaz</a>
+  <a class="btn" href="tel:+994XXXXXXXXX">Telefonla zəng et</a>
+  <a class="btn dark" href="https://instagram.com/">Instagram</a>
+  <a class="btn dark" href="https://tiktok.com/">TikTok</a>
+ </div>
+</section>
+</main>
 
-const ADMIN_PASSWORD = "044123";
+<footer>
+ <h2>TƏKƏR EVİ 044</h2>
+ <p>Keyfiyyətli təkərlər, təhlükəsiz yol!</p>
+ <p>© 2026</p>
+</footer>
 
-const waURL = "https://wa.me/" + PHONE;
-
-["heroWA","contactWA"].forEach(id =>
-  document.getElementById(id).href = waURL
-);
-["heroIG","contactIG"].forEach(id =>
-  document.getElementById(id).href = INSTAGRAM
-);
-["heroTT","contactTT"].forEach(id =>
-  document.getElementById(id).href = TIKTOK
-);
-["heroCall","contactCall"].forEach(id =>
-  document.getElementById(id).href = "tel:+" + PHONE
-);
-
-let products = JSON.parse(localStorage.getItem("tekerProducts") || "[]");
-let editingIndex = -1;
-let selectedImage = "";
-
-function showAdmin(){
-  document.getElementById("admin").style.display = "block";
-  document.getElementById("admin").scrollIntoView();
-}
-
-function login(){
-  if(document.getElementById("password").value === ADMIN_PASSWORD){
-    document.getElementById("login").style.display = "none";
-    document.getElementById("controls").style.display = "block";
-    renderAdmin();
-  }else{
-    alert("Parol yanlışdır!");
-  }
-}
-
-function logout(){
-  document.getElementById("login").style.display = "block";
-  document.getElementById("controls").style.display = "none";
-  document.getElementById("password").value = "";
-}
-
-document.getElementById("imageInput").addEventListener("change", function(){
-  const file = this.files[0];
-  if(!file) return;
-
-  if(file.size > 1500000){
-    alert("Şəkil 1.5 MB-dan kiçik olmalıdır.");
-    this.value = "";
-    return;
-  }
-
-  const reader = new FileReader();
-  reader.onload = e => selectedImage = e.target.result;
-  reader.readAsDataURL(file);
-});
-
-function saveProduct(){
-  const brand = document.getElementById("brandInput").value.trim();
-  const size = document.getElementById("sizeInput").value.trim();
-  const cash = document.getElementById("cashInput").value;
-  const month = document.getElementById("monthInput").value;
-
-  if(!brand || !size || cash === "" || month === ""){
-    alert("Bütün məlumatları doldur!");
-    return;
-  }
-
-  const oldImage = editingIndex >= 0
-    ? products[editingIndex].image || ""
-    : "";
-
-  const product = {
-    brand, size, cash, month,
-    image: selectedImage || oldImage
-  };
-
-  if(editingIndex >= 0){
-    products[editingIndex] = product;
-  }else{
-    if(products.length >= 8){
-      alert("Maksimum 8 məhsul əlavə edə bilərsən.");
-      return;
-    }
-    products.push(product);
-  }
-
-  try{
-    localStorage.setItem("tekerProducts", JSON.stringify(products));
-  }catch(error){
-    alert("Yaddaş dolub. Daha kiçik şəkil seç.");
-    return;
-  }
-
-  clearForm();
-  renderProducts();
-  renderAdmin();
-  alert("Məhsul yadda saxlandı!");
-}
-
-function clearForm(){
-  ["brandInput","sizeInput","cashInput","monthInput","imageInput"]
-    .forEach(id => document.getElementById(id).value = "");
-  selectedImage = "";
-  editingIndex = -1;
-}
-
-function deleteProduct(index){
-  if(!confirm("Məhsulu silmək istəyirsən?")) return;
-
-  products.splice(index, 1);
-  localStorage.setItem("tekerProducts", JSON.stringify(products));
-  renderProducts();
-  renderAdmin();
-}
-
-function editProduct(index){
-  const p = products[index];
-
-  document.getElementById("brandInput").value = p.brand;
-  document.getElementById("sizeInput").value = p.size;
-  document.getElementById("cashInput").value = p.cash;
-  document.getElementById("monthInput").value = p.month;
-
-  selectedImage = p.image || "";
-  editingIndex = index;
-  document.getElementById("admin").scrollIntoView();
-}
-
-function renderProducts(){
-  const list = document.getElementById("productList");
-  list.innerHTML = "";
-
-  if(products.length === 0){
-    list.innerHTML = '<div class="empty">Hələ məhsul əlavə edilməyib.</div>';
-    return;
-  }
-
-  products.forEach(p => {
-    const card = document.createElement("div");
-    card.className = "product";
-
-    if(p.image){
-      const img = document.createElement("img");
-      img.src = p.image;
-      img.alt = p.brand;
-      card.appendChild(img);
-    }
-
-    const title = document.createElement("h3");
-    title.textContent = p.brand;
-
-    const size = document.createElement("p");
-    size.textContent = "Ölçü: " + p.size;
-
-    const cash = document.createElement("p");
-    cash.className = "price";
-    cash.textContent = p.cash + " AZN";
-
-    const month = document.createElement("p");
-    month.className = "month";
-    month.textContent = "Aylıq: " + p.month + " AZN";
-
-    const order = document.createElement("a");
-    order.className = "order";
-    order.textContent = "WhatsApp ilə sifariş";
-    order.href = waURL + "?text=" + encodeURIComponent(
-      "Salam, " + p.brand + " " + p.size + " təkəri ilə maraqlanıram."
-    );
-    order.target = "_blank";
-
-    card.append(title, size, cash, month, order);
-    list.appendChild(card);
-  });
-}
-
-function renderAdmin(){
-  const list = document.getElementById("adminList");
-  list.innerHTML = "";
-
-  products.forEach((p, index) => {
-    const item = document.createElement("div");
-    item.className = "admin-item";
-
-    const name = document.createElement("span");
-    name.textContent = p.brand + " — " + p.size;
-
-    const edit = document.createElement("button");
-    edit.className = "purple";
-    edit.textContent = "Dəyiş";
-    edit.onclick = () => editProduct(index);
-
-    const del = document.createElement("button");
-    del.className = "red";
-    del.textContent = "Sil";
-    del.onclick = () => deleteProduct(index);
-
-    item.append(name, edit, del);
-    list.appendChild(item);
-  });
-}
-
-renderProducts();
-</script>
 </body>
 </html>
